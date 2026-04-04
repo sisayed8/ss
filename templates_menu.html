@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>باقات الكروت الملونة الفخمة</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Outfit:wght@400;700&display=swap');
+
+        :root {
+            --tg-theme-bg-color: #f0f2f5;
+            --tg-theme-text-color: #1a1a1a;
+            --gradient-5: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);     /* زمردي */
+            --gradient-10: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);    /* أزرق سماوي */
+            --gradient-20: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);    /* ذهبي */
+            --gradient-50: linear-gradient(135deg, #f12711 0%, #f5af19 100%);    /* برتقالي مشرق */
+            --gradient-100: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%);   /* أحمر ملكي */
+            --glass: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            font-family: 'Cairo', 'Outfit', sans-serif;
+            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.3s eased;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+            gap: 15px;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 2px; /* For the border gradient effect */
+            background-image: linear-gradient(to bottom right, rgba(255,255,255,1), rgba(255,255,255,0.2));
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:active {
+            transform: scale(0.92);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-content {
+            background: white;
+            border-radius: 22px;
+            padding: 20px 10px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* باقات الألوان المتدرجة (Vibrant Mapping) */
+        .price-5 { background: var(--gradient-5); }
+        .price-10 { background: var(--gradient-10); }
+        .price-20 { background: var(--gradient-20); }
+        .price-50 { background: var(--gradient-50); }
+        .price-100 { background: var(--gradient-100); }
+        .price-default { background: linear-gradient(135deg, #606c88, #3f4c6b); }
+
+        .template-name {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 5px;
+            color: #333;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .server-badge {
+            background: rgba(0,0,0,0.06);
+            color: #666;
+            font-size: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            opacity: 0.7;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            body { background: #0f1214; }
+            .card-content { background: #1a1e21; }
+            .template-name { color: #e4e6eb; }
+            .server-badge { background: rgba(255,255,255,0.1); color: #aaa; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💎 قائمة الباقات الفخمة</h1>
+    </div>
+
+    <div class="templates-grid" id="main-grid">
+        <!-- القوالب ستظهر هنا برمجياً -->
+    </div>
+
+    <div class="footer">
+        اختر الفئة الملونة لبدء توليد الكروت فوراً
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
+
+        // جلب البيانات من الرابط (Base64)
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataStr = urlParams.get('data');
+        let templates = [];
+        
+        try {
+            if (dataStr) {
+                // فك تشفير البيانات الآمنة لإظهارها في الأزرار
+                templates = JSON.parse(atob(dataStr.replace(/_/g, '/').replace(/-/g, '+')));
+            }
+        } catch (e) {
+            console.error("Data error:", e);
+        }
+
+        const grid = document.getElementById('main-grid');
+
+        if (templates.length === 0) {
+            grid.innerHTML = '<div style="grid-column:1/-1; padding:50px; text-align:center; color:#888;">جاري تحميل لوحة الألوان الفخمة...</div>';
+        }
+
+        templates.forEach((t, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.animation = `fadeInDown ${0.3 + (index * 0.1)}s ease-out`;
+            
+            const price = parseInt(t.price) || 0;
+            let priceClass = 'price-default';
+            if (price <= 5) priceClass = 'price-5';
+            else if (price <= 15) priceClass = 'price-10';
+            else if (price <= 25) priceClass = 'price-20';
+            else if (price <= 60) priceClass = 'price-50';
+            else if (price > 60) priceClass = 'price-100';
+
+            card.innerHTML = `
+                <div class="card-content">
+                    <div class="price-circle ${priceClass}">${price}</div>
+                    <div class="template-name">${t.template_name}</div>
+                    <div class="server-badge">🖥 ${t.server || 'All'}</div>
+                </div>
+            `;
+
+            card.onclick = () => {
+                // إرسال النتيجة الملونة للبوت فوراً
+                tg.sendData(JSON.stringify({
+                    template: t.template_name,
+                    action: 'gen'
+                }));
+                tg.close();
+            };
+
+            grid.appendChild(card);
+        });
+
+        // تحسين مظهر التليجرام الخاص بمستخدمنا المميز
+        tg.setHeaderColor('secondary_bg_color');
+        tg.setBackgroundColor('bg_color');
+    </script>
+</body>
+</html>
