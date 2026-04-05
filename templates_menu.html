@@ -210,6 +210,11 @@
             `;
 
             card.onclick = () => {
+                // إرسال تنبيه اهتزاز للموبايل (Haptic Feedback) لرفع مستوى الفخامة والجودة
+                if (window.Telegram.WebApp.HapticFeedback) {
+                    window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+                }
+                
                 // إرسال النتيجة الملونة للبوت فوراً
                 tg.sendData(JSON.stringify({
                     template: t.template_name,
